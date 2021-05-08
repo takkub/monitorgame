@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react'
+import { Route } from 'react-router-dom'
+import ListAdventures from "./page/kolobok/adventures";
+const Home = () => <h1>Home</h1>
+// const About = () => <h1>About</h1>
+const Post = () => <h1>Post</h1>
+const Project = () => <h1>Project</h1>
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App container">
+        <Route path="/" component={Home} />
+        <Route path="/kolobok/Adventures" component={ListAdventures} />
+        <Route path="/posts" component={Post} />
+        <Route path="/projects" component={Project} />
+      </div>
+    )
+  }
 }
-
-export default App;
+export default App
