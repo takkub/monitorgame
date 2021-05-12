@@ -50,6 +50,9 @@ const ListAdventures = () => {
           case 4:
             result.game = "หมาจิ่งจอก";
             break;
+          default:
+            result.game = '';
+          break;
         }
         switch (Drop) {
           case 0 :
@@ -64,6 +67,9 @@ const ListAdventures = () => {
           case 3:
             result.drop = "Epic";
             break;
+          default:
+            result.game = '';
+            break;
         }
         switch (JData.r) {
           case 0 :
@@ -71,6 +77,9 @@ const ListAdventures = () => {
             break;
           case 1:
             result.status = "ชนะ";
+            break;
+          default:
+            result.game = '';
             break;
         }
         allData.push(result)
@@ -105,7 +114,7 @@ const ListAdventures = () => {
     },
   ]
   return <>
-    <Table columns={columns} dataSource={list} />
+    <Table size={'small'} columns={columns} dataSource={list} />
   </>
 };
 export default ListAdventures;
