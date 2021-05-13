@@ -4,6 +4,7 @@ import MainLayout from "./layout/MainLayout";
 import ListAdventures from "./page/kolobok/adventures";
 import {Layout, Menu} from "antd";
 import {ContainerFilled} from "@ant-design/icons";
+import Staked from "./page/r-planet/staked";
 const { Header, Content, Footer, Sider } = Layout;
 const Home = () => <h1>Home</h1>
 const Routes = () => {
@@ -25,6 +26,11 @@ const Routes = () => {
                 <span>Kolobok Adventures</span>
                 <Link to="/kolobok/adventures" />
               </Menu.Item>
+              <Menu.Item key="3">
+                <ContainerFilled/>
+                <span>R-Planet Staked</span>
+                <Link to="/rplanet/staked" />
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout>
@@ -41,6 +47,7 @@ const Routes = () => {
             >
               <Route exact path="/" component={Home} />
               <Route path="/kolobok/adventures" component={ListAdventures} />
+              <Route path="/rplanet/staked" component={Staked} />
             </Content>
             <Footer style={{ textAlign: "center" }}>
               Ant Design ©2016 Created by Ant UED

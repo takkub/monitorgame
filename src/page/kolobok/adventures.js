@@ -6,7 +6,7 @@ const {Countdown} = Statistic;
 const ListAdventures = () => {
   const [list,setList] = useState([])
   const fetchData = async (pageState = null, fetchSize = 70) => {
-    let listUser = ['.5are.wam', '41xbq.wam', 'ymkro.wam', 'fahrk.wam', '1hzrq.wam', '4egrk.wam', '2ezbs', 'vdtsa.wam']
+    let listUser = ['.5are.wam', '41xbq.wam', 'ymkro.wam', 'fahrk.wam', '1hzrq.wam', '4egrk.wam', '2ezbs', 'vdtsa.wam','hnwbg.wam']
     let allData = []
     for (let fetch of listUser) {
       let params = {
@@ -93,7 +93,6 @@ const ListAdventures = () => {
   useEffect(() => {
     (async () => {
       let {data} = await fetchData();
-      console.log(data)
       setList(data)
     })()
   }, []);
