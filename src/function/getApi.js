@@ -77,7 +77,7 @@ export const getType = async () => {
 }
 export const getReward = async () => {
   let allData = []
-  let listUser = ['.5are.wam', '41xbq.wam', 'ymkro.wam', 'fahrk.wam', '1hzrq.wam', '4egrk.wam', '2ezbs', 'vdtsa.wam', 'hnwbg.wam']
+  let listUser = ['.5are.wam', '41xbq.wam', 'ymkro.wam', 'fahrk.wam', '1hzrq.wam', '4egrk.wam', '2ezbs.wam', 'vdtsa.wam', 'hnwbg.wam']
   let i = 1;
   for (let fetch of listUser) {
     let params = {

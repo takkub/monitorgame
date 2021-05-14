@@ -5,8 +5,9 @@ import ListAdventures from "./page/kolobok/adventures";
 import {Layout, Menu} from "antd";
 import {ContainerFilled} from "@ant-design/icons";
 import Staked from "./page/r-planet/staked";
+import Home from "./page/Home";
 const { Header, Content, Footer, Sider } = Layout;
-const Home = () => <h1>Home</h1>
+
 const Routes = () => {
   return (
     <BrowserRouter>
