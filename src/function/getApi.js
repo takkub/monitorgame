@@ -1,4 +1,37 @@
 import axios from "axios";
+import _ from "lodash";
+export const getAdvanced = async () =>{
+  let listUser = ['.5are.wam', '41xbq.wam', 'ymkro.wam', 'fahrk.wam', '1hzrq.wam', '4egrk.wam', 'vdtsa.wam', 'hnwbg.wam']
+  let allData = []
+  for (let fetch of listUser) {
+    let params = {
+      "json": true,
+      "code": "ilovekolobok",
+      "scope": "ilovekolobok",
+      "table": "advents",
+      "table_key": "owner",
+      "lower_bound": fetch,
+      "upper_bound": fetch + 'a',
+      "index_position": 2,
+      "key_type": "i64",
+      "limit": 1000,
+      "reverse": false,
+      "show_payer": false
+    }
+    await axios.post(`https://wax.cryptolions.io/v1/chain/get_table_rows`, params).then(result => {
+      if (result.data.rows.length > 0) {
+        let record = result.data.rows
+        record = {user:fetch,count:record.length,data:record}
+        allData.push(record)
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+  return {
+    data: allData
+  };
+}
 export const getType = async () => {
   let allData = []
   let listUser = [
@@ -106,4 +139,41 @@ export const getReward = async () => {
     data: allData
   };
 }
-
+export const getItems = async (category) => {
+  let allData = []
+  let listUser = ['.5are.wam', '41xbq.wam', 'ymkro.wam', 'fahrk.wam', '1hzrq.wam', '4egrk.wam', 'vdtsa.wam', 'hnwbg.wam']
+  let i = 1;
+  for (let fetch of listUser) {
+    let params = {
+      "json": true,
+      "code": "simpleassets",
+      "scope": fetch,
+      "table": "sassets",
+      "lower_bound": "",
+      "upper_bound": "",
+      "index_position": 1,
+      "key_type": "i64",
+      "limit": 1000,
+      "reverse": false,
+      "show_payer": false
+    }
+    await axios.post(`https://wax.cryptolions.io/v1/chain/get_table_rows`, params).then(result => {
+      if (result.data.rows.length > 0) {
+        let record = result.data.rows
+        record = {user:fetch,unstaked:record.filter(r => r.category === category).length}
+        allData.push(record)
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+  return {
+    data: allData
+  };
+}
+export const LineAlert = async (data,message) => {
+    await axios.post('https://api.vdc.co.th/message/v1/notification/rundeck?type=line&tokens=g0myVHglwxDQ4ZVyskafwZE4KP11qXhA7sIO1KXv5If&message='+ data + message +'&stickerPackageId=2&stickerId=45').then(result => {
+  }).catch(error => {
+    console.log(error)
+  })
+}

@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from "react";
-import { Table,Statistic } from 'antd';
+import {Table, Statistic, Image} from 'antd';
 import axios from 'axios';
 import _ from "lodash";
+import {getAdvanced} from "../../function/getApi";
+import grand from '../../image/grand-small.png'
+import rabbit from '../../image/rabbit-small.png'
+import wolf from '../../image/wolf-small.png'
+import bear from '../../image/bear-small.png'
+import fox from '../../image/fox-small.png'
+
 const {Countdown} = Statistic;
 const ListAdventures = () => {
-  const [list,setList] = useState([])
+  const [list, setList] = useState([])
   const fetchData = async (pageState = null, fetchSize = 70) => {
-    let listUser = ['.5are.wam', '41xbq.wam', 'ymkro.wam', 'fahrk.wam', '1hzrq.wam', '4egrk.wam', '2ezbs', 'vdtsa.wam','hnwbg.wam']
+    let listUser = ['.5are.wam', '41xbq.wam', 'ymkro.wam', 'fahrk.wam', '1hzrq.wam', '4egrk.wam', 'vdtsa.wam', 'hnwbg.wam']
     let allData = []
     for (let fetch of listUser) {
       let params = {
@@ -23,37 +30,17 @@ const ListAdventures = () => {
         "reverse": false,
         "show_payer": false
       }
-      const {data} = await axios.post(`https://wax.cryptolions.io/v1/chain/get_table_rows`,params)
-        .catch(e => {
-          console.log("catch", e);
-          return {
-            data: []
-          };
-        });
+      const {data} = await axios.post(`https://wax.cryptolions.io/v1/chain/get_table_rows`, params)
+      .catch(e => {
+        console.log("catch", e);
+        return {
+          data: []
+        };
+      });
       for (let result of data.rows) {
         let JData = result.data ? JSON.parse(result.data) : ''
         let Monster = result.game ? result.game : 0
         let [Drop] = JData.p ? JData.p : ''
-        switch (Monster) {
-          case 0 :
-            result.game = "ยาย";
-            break;
-          case 1:
-            result.game = "กระต่าย";
-            break;
-          case 2:
-            result.game = "หมาป่า";
-            break;
-          case 3:
-            result.game = "หมี";
-            break;
-          case 4:
-            result.game = "หมาจิ่งจอก";
-            break;
-          default:
-            result.game = '';
-          break;
-        }
         switch (Drop) {
           case 0 :
             result.drop = "Common";
@@ -97,11 +84,22 @@ const ListAdventures = () => {
     })()
   }, []);
   const columns = [
-    {title: "Assetid", dataIndex: 'assetid', key:'assetid'},
-    {title: 'Owner', dataIndex: 'owner', key:'owner'},
-    {title: 'Game', dataIndex: 'game', key:'game'},
-    {title: "Drop", dataIndex: 'drop', key:'drop'},
-    {title: 'Coldown', dataIndex: 'coldown', key:'coldown', render: (text) => (<Countdown valueStyle={{'fontSize': '18px'}}  value={text * 1000}/>)},
+    {title: "Assetid", dataIndex: 'assetid', key: 'assetid'},
+    {title: 'Owner', dataIndex: 'owner', key: 'owner'},
+    {title: 'Game', dataIndex: 'game', key: 'game' , render:(id) =>
+        <Image
+          preview={false}
+          src={id === 0 ? grand : id === 1 ? rabbit : id === 2 ? wolf : id === 3 ? bear : id === 4 ? fox : '' }
+          width={20}
+        />
+    },
+    {title: "Drop", dataIndex: 'drop', key: 'drop'},
+    {
+      title: 'Coldown',
+      dataIndex: 'coldown',
+      key: 'coldown',
+      render: (text) => (<Countdown valueStyle={{'fontSize': '18px'}} value={text * 1000}/>)
+    },
     {
       title: 'Status', dataIndex: 'status', render: (text) => {
         return <span style={{
@@ -113,7 +111,7 @@ const ListAdventures = () => {
     },
   ]
   return <>
-    <Table size={'small'} columns={columns} dataSource={list} />
+    <Table size={'small'} columns={columns} pagination={{pageSize: 100}} dataSource={list}/>
   </>
 };
 export default ListAdventures;

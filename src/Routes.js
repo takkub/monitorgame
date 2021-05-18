@@ -6,6 +6,9 @@ import {Layout, Menu} from "antd";
 import {ContainerFilled} from "@ant-design/icons";
 import Staked from "./page/r-planet/staked";
 import Home from "./page/Home";
+import AWAccount from "./page/AWAccount";
+import Login from "./page/Login";
+import Bot from "./page/kolobok/bot";
 const { Header, Content, Footer, Sider } = Layout;
 
 const Routes = () => {
@@ -32,6 +35,22 @@ const Routes = () => {
                 <span>R-Planet Staked</span>
                 <Link to="/rplanet/staked" />
               </Menu.Item>
+              <Menu.Item key="4">
+                <ContainerFilled/>
+                <span>AW Account</span>
+                <Link to="/alienworld/account" />
+              </Menu.Item>
+              <Menu.Item key="5">
+                <ContainerFilled/>
+                <span>Login</span>
+                <Link to="/login" />
+              </Menu.Item>
+              <Menu.Item key="6">
+                <ContainerFilled/>
+                <span>Bot</span>
+                <Link to="/bot" />
+              </Menu.Item>
+
             </Menu>
           </Sider>
           <Layout>
@@ -49,6 +68,9 @@ const Routes = () => {
               <Route exact path="/" component={Home} />
               <Route path="/kolobok/adventures" component={ListAdventures} />
               <Route path="/rplanet/staked" component={Staked} />
+              <Route path="/alienworld/account" component={AWAccount} />
+              <Route path="/bot" component={Bot} />
+              <Route path="/login" component={Login} />
             </Content>
             <Footer style={{ textAlign: "center" }}>
               Ant Design ©2016 Created by Ant UED

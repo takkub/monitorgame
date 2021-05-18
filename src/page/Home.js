@@ -14,8 +14,8 @@ import authContext from "../context/Auth";
 
 const { Panel } = Collapse;
 const { TextArea } = Input;
-const wax = new waxjs.WaxJS('https://api.waxsweden.org');
-
+// const wax = new waxjs.WaxJS('https://api.waxsweden.org');
+const wax = new waxjs.WaxJS('https://api.waxsweden.org', '.5are.wam',["EOS7DaLBULzPXKmV6V7aJrawgn2rwmK82o33k3KiAc8GBCWuM6qBd", "EOS7dSfgTsBkrRUHu7Pb3NC28iGyfcMQZwTN2JjEvL2QdmsPBbjjq", "EOS8UhZSLGoiUSifugc4x2LrLbKW6GwKKNzJbxtZBBChqcKbfV18G"], false);
 
 const Home = () => {
     let auth = useContext(authContext);
@@ -59,6 +59,7 @@ const Home = () => {
         })
         return true;
     }
+
     const getTLM = () => {
         let params = {json:true,code:"alien.worlds",scope:ac,table:"accounts",table_key:"","lower_bound":"",upper_bound:"",index_position:1,key_type:"",limit:1,reverse:false,show_payer:false};
         axios.post('https://api.waxsweden.org/v1/chain/get_table_rows', params).then(res => {
@@ -218,6 +219,7 @@ const Home = () => {
           return error;
         }
       };
+
     const background_mine = async (account) => {
         return new Promise(async (resolve, reject) => {
           const bagDifficulty = await getBagDifficulty(account);
@@ -246,13 +248,15 @@ const Home = () => {
         console.log(account_permission);
         console.log(mine_data1);
         console.log(hyperion_endpoints);
+
         try {
             var mine_work = JSON.parse(mine_data1);
             const mine_data = {
                 miner: mine_work.account,
                 nonce: mine_work.rand_str,
             };
-            console.log("Claiming Now");
+            console.log("Claiming Now",mine_data);
+            console.log(mining_account,account, 'active', mine_data, hyperion_endpoints, wax.api)
             const claimData = await claim(mining_account,account, 'active', mine_data, hyperion_endpoints, wax.api);
             console.log("Claim Data" + claimData);
             setStatus('Claiming...')
@@ -262,7 +266,11 @@ const Home = () => {
             setStatus('claim fail');
         }
     }
+
     const claim = (mining_account, account, account_permission, mine_data, hyperion_endpoints, eos_api) => {
+
+
+
         return new Promise(async (resolve, reject) => {
             try {
                 const actions = [{
@@ -280,8 +288,8 @@ const Home = () => {
                     blocksBehind: 3,
                     expireSeconds: 90,
                 });
-    
-                console.log(res.transaction_id)
+
+                console.log(res)
 
                 setStatus('Transaction claiming')
                 setMineing(false);
@@ -296,6 +304,7 @@ const Home = () => {
             }
         });
     }
+
     const getBountyFromTx = async (transaction_id, miner, hyperion_endpoints) => {
         // temporary fix
         // await sleep(4000);
